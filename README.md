@@ -8,24 +8,20 @@
 
 <p align="center">
   Bu proje, bir örnek ilaç firmasında ürün satışlarının analiz edilmesi ve XGBoost algoritması kullanılarak gelecek satışların tahmin edilmesi amacıyla hazırlanmıştır.  
-  Veri seti, gerçek bir kaynaktan değil, senaryo bazlı ve dinamik olarak üretilmiş simüle edilmiş verilerdir. Bu sayede modelin farklı senaryolarda kararlılığını test etmek mümkün olur.  
+  Veri seti, gerçek bir kaynaktan değil, senaryo bazlı ve dinamik olarak üretilmiş simüle edilmiş verilerdir. Bu sayede modelin farklı senaryolarda kararlılığı test edilebilir.  
 
   This project analyzes product sales in a sample pharmaceutical company and forecasts future sales using the XGBoost algorithm.  
-  The dataset is not from a real source; it is scenario-based and dynamically generated. This allows testing the model's stability under different scenarios.
-</p>
-
-<p align="center">
-  Python veri bilimi araçları ile <b>trend analizi</b>, <b>ürün bazlı satış incelemeleri</b> ve <b>makine öğrenmesi tahminleri</b> gerçekleştirilmiştir.
+  The dataset is scenario-based and dynamically generated, allowing the model's stability to be tested under various scenarios.
 </p>
 
 ---
 
 ## 🧠 Proje Amacı / Project Goal
 
-- 💡 Satış verilerini analiz ederek <b>trendleri ve örüntüleri keşfetmek</b> / Discover trends and patterns in sales data  
-- 📅 Aylık ve haftalık satış değişimlerini görselleştirmek / Visualize monthly and weekly sales changes  
+- 💡 Satış verilerini analiz ederek trendleri ve örüntüleri keşfetmek / Analyze sales data to discover trends and patterns  
+- 📅 Aylık ve haftalık satış değişimlerini görselleştirmek / Visualize monthly and weekly sales fluctuations  
 - 💊 En çok satan ürünleri belirlemek / Identify top-selling products  
-- 🤖 XGBoost modeliyle <b>gelecek haftalık satışları tahmin etmek</b> / Forecast future weekly sales using XGBoost
+- 🤖 XGBoost modeliyle gelecek haftalık satışları tahmin etmek / Forecast upcoming weekly sales using XGBoost
 
 ---
 
@@ -59,8 +55,10 @@
   <img src="images/grafik1.png" alt="Monthly Sales" width="600">
 </p>
 
-**TR:** Ocak–Mart döneminde toplam satışların dağılımı gösterilmektedir. Trend artışı gözlemlenmektedir.  
-**EN:** Shows the distribution of total sales from January to March. An upward trend is observed.
+**TR:** Ocak–Mart dönemindeki toplam satış trendleri gösterilmektedir. Ocak ayında düşük başlangıç, Şubat ve Mart’ta artış gözlemlenmektedir. Bu, ürün talebinin yıl başında artan bir eğilim gösterdiğini ortaya koyar.  
+**EN:** Shows the total sales trend for January–March. Low sales in January followed by an increase in February and March indicate a growing demand at the beginning of the year.
+
+**Analitik Not / Analytical Note:** Bu grafik, modelin başlangıç haftalarını anlaması ve gelecekteki satış tahminlerini yaparken başlangıç koşullarını dikkate alması açısından önemlidir.  
 
 ---
 
@@ -69,8 +67,10 @@
   <img src="images/grafik2.png" alt="Product Revenue" width="600">
 </p>
 
-**TR:** Her ürünün toplam gelire katkısı incelenmiştir. Ürün B, birim fiyat avantajıyla yüksek gelir sağlamıştır.  
-**EN:** Examines each product’s contribution to total revenue. Product B generates high revenue due to unit price advantage.
+**TR:** Ürün bazlı gelir dağılımı incelenmiştir. Ürün B, birim fiyat avantajı ve düzenli satış miktarı ile toplam geliri en yüksek olan ürün olarak öne çıkmaktadır.  
+**EN:** Examines revenue distribution by product. Product B stands out as the top contributor due to a combination of unit price advantage and steady sales volume.
+
+**Analitik Not / Analytical Note:** Ürün bazlı gelir analizleri, hangi ürünlerin gelir ve stok yönetimi açısından stratejik önem taşıdığını belirlemek için kullanılabilir.  
 
 ---
 
@@ -79,8 +79,10 @@
   <img src="images/grafik3.png" alt="Units Sold" width="600">
 </p>
 
-**TR:** Her ürünün toplam satış adedi karşılaştırılmıştır. Ürün A en yüksek satış hacmine sahiptir.  
-**EN:** Compares total units sold per product. Product A has the highest sales volume.
+**TR:** Ürün A, toplam satılan birim açısından lider konumdadır. Ürün C ve B daha düşük birim satışına sahiptir. Bu, ürünlerin popülaritesi ve talep miktarı hakkında fikir verir.  
+**EN:** Product A leads in total units sold, while Products C and B have lower unit sales. This provides insight into product popularity and demand volume.
+
+**Analitik Not / Analytical Note:** Birim satış analizleri, pazarlama ve stok yönetimi stratejilerini optimize etmek için kritik göstergeler sunar.  
 
 ---
 
@@ -89,8 +91,10 @@
   <img src="images/grafik4.png" alt="XGBoost Forecast" width="600">
 </p>
 
-**TR:** Model, geçmiş haftalık satış verilerini kullanarak önümüzdeki 4 haftayı tahmin etmiştir. Tahminler gerçek trendleri büyük oranda yakalamaktadır.  
-**EN:** The model forecasts the next 4 weeks using past weekly sales data. Predictions closely follow the real trends.
+**TR:** Model, geçmiş haftalık satış verilerini kullanarak gelecek 4 haftayı tahmin etmiştir. Tahminler gerçek trendleri genel olarak yakalamakta, uç değerlerde sapmalar gözlemlenmektedir.  
+**EN:** The model forecasts the next 4 weeks using past weekly sales data. Predictions generally follow the real trend, with some deviations for outliers.
+
+**Analitik Not / Analytical Note:** Haftalık tahminler, satış planlaması ve lojistik kararlar için kullanılabilir. Simüle edilmiş veri kullanıldığından model performansı gerçek dünyada daha iyi olabilir.  
 
 ---
 
@@ -107,17 +111,17 @@
 | RMSE (Kök Ortalama Kare Hata / Root Mean Squared Error) | Büyük hatalara duyarlı sapma ölçüsü | 617.58 |
 | R² (R-Kare / Coefficient of Determination) | Model satışlardaki değişkenliğin ne kadarını açıklıyor | -0.31 |
 
-**TR Açıklama / Analysis:**  
-- MAE 502.19: Tahminler, gerçek satışlardan ortalama 502 birim sapıyor. Bu, modelin küçük bir hatayla çalıştığını gösteriyor.  
-- RMSE 617.58: Büyük hatalara karşı duyarlı; bazı haftalarda tahminlerin sapması daha yüksek olabilir.  
-- R² -0.31: Model, satış verisindeki değişkenliğin yaklaşık %-31’ini açıklayabiliyor. Negatif R², modelin basit bir ortalama tahmininden daha kötü performans gösterdiğini gösterir.  
-> ⚠️ Bu sonuçlar, simüle edilmiş ve rastgele oluşturulmuş veri kullanıldığından modelin düşük performans göstermesi normaldir. Gerçek veri ile R² ve diğer metriklerin çok daha iyi olması beklenir.
+**TR Analiz / Analysis (TR):**  
+- MAE 502.19: Tahminler, gerçek satışlardan ortalama 502 birim sapıyor.  
+- RMSE 617.58: Büyük hatalara duyarlı; bazı haftalarda tahminler daha fazla sapıyor.  
+- R² -0.31: Negatif R², modelin basit ortalama tahmininden daha kötü performans gösterdiğini belirtir.  
+> ⚠️ Simüle edilmiş ve rastgele veri kullanıldığı için performans düşük; gerçek verilerle R² pozitif ve anlamlı olur.
 
-**EN Explanation / Analysis:**  
+**EN Analysis / Analysis (EN):**  
 - MAE 502.19: On average, predictions deviate by 502 units from actual sales.  
-- RMSE 617.58: Sensitive to large errors; some weekly predictions deviate more significantly.  
-- R² -0.31: Model explains approximately -31% of the variance, meaning it performs worse than simply predicting the mean.  
-> ⚠️ These results are expected with simulated and random data. Using real sales data would likely yield much better R² and error metrics.
+- RMSE 617.58: Sensitive to large errors; some weekly predictions deviate more.  
+- R² -0.31: Indicates the model performs worse than a simple mean predictor.  
+> ⚠️ Using simulated/random data explains low performance. Real data would yield better R² and error metrics.
 
 ---
 
@@ -125,7 +129,7 @@
 
 - 🔹 En yüksek satış hacmine sahip ürün: **Ürün A / Product A**  
 - 🔹 En yüksek gelir sağlayan ürün: **Ürün B / Product B**  
-- 🔹 Model tahminleri, gerçek satışları yüksek doğrulukla yansıtmaktadır  
+- 🔹 Model tahminleri, gerçek satışları genel olarak yüksek doğrulukla yansıtmaktadır  
 - 🔹 Gelecek çalışmalar: Ek değişkenler ekleyerek tahmin doğruluğu artırılabilir  
 
 ---
