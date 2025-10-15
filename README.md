@@ -52,7 +52,7 @@
 
 ### 1️⃣ Yıllık Toplam Satışlar / Total Annual Sales
 <p align="center">
-  <img src="images/Figure_1.png" alt="Monthly Sales" width="600">
+  <img src="images/grfk1.png" alt="Monthly Sales" width="600">
 </p>
 
 **TR:** 12 aylık dönemdeki toplam satış gelirleri, belirgin bir mevsimsellik göstermektedir. Satışlar Ocak, Haziran ve Ekim aylarında zirve yaparken, özellikle bahar ve yaz sonu aylarında düşüşler yaşanmaktadır.
@@ -64,7 +64,7 @@
 
 ### 2️⃣ Ürün Bazında Toplam Gelir / Total Revenue by Product
 <p align="center">
-  <img src="images/Figure_2.png" alt="Product Revenue" width="600">
+  <img src="images/grfk.png" alt="Product Revenue" width="600">
 </p>
 
 **TR:** Gelir bazında Ürün C, yaklaşık 260,000 birim ile en büyük katkıyı sağlamaktadır. Onu 200,000 birim ile Ürün A takip ederken, Ürün B en az geliri getirmiştir.
@@ -76,7 +76,7 @@
 
 ### 3️⃣ Ürün Bazında Satılan Toplam Birim / Total Units Sold by Product
 <p align="center">
-  <img src="images/Figure_3.png" alt="Units Sold" width="600">
+  <img src="images/grfk.png" alt="Units Sold" width="600">
 </p>
 
 **TR:** Birim satış adedinde Ürün A, yaklaşık 10,000 adetle açık ara liderdir. En çok geliri getiren Ürün C'nin, Ürün A'nın yaklaşık yarısı kadar satılması, C'nin yüksek fiyatlı ve yüksek kâr marjlı bir ürün olduğunu doğrulamaktadır.
@@ -114,7 +114,7 @@
 
 ### 🤖 XGBoost Haftalık Satış Tahmini / Weekly Sales Forecast
 <p align="center">
-  <img src="images/Figure_4.png" alt="XGBoost Forecast" width="600">
+  <img src="images/grfk4.png" alt="XGBoost Forecast" width="600">
 </p>
 
 **TR:** Model, test verileri üzerinde yüksek bir performans sergilemiştir. Mavi (gerçek) ve turuncu (tahmin) çizgilerin birbirini çok yakından takip etmesi, modelin genel trendi ve dalgalanmaları yakalamadaki başarısını görsel olarak kanıtlamaktadır.
