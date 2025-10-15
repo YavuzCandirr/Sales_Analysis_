@@ -1,4 +1,4 @@
-# 📈 İlaç Satış Analizi ve XGBoost Tahmini / Drug Sales Analysis & XGBoost Forecasting
+# 📈 Satış Analizi ve XGBoost Tahmini / Sales Analysis & XGBoost Forecasting
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.11-blue?logo=python" alt="Python">
