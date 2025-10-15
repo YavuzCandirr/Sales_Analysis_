@@ -2,7 +2,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.11-blue?logo=python" alt="Python">
-  <img src="https://img.shields.io/badge/Libraries-pandas%2C%20seaborn%2C%20sklearn%2C%20xgboost-brightgreen" alt="Libraries">
+  <img src="https://img.shields.io/badge/Libraries-pandas%2C%20matplotlib%2C%20seaborn%2C%20scikit--learn%2C%20xgboost-brightgreen" alt="Libraries">
   <img src="https://img.shields.io/badge/Model-XGBoost-orange" alt="Model">
 </p>
 
@@ -55,8 +55,8 @@
   <img src="images/grafik1.png" alt="Monthly Sales" width="600">
 </p>
 
-**TR:** Ocak–Mart dönemindeki toplam satış trendleri gösterilmektedir. Ocak ayında düşük başlangıç, Şubat ve Mart’ta artış gözlemlenmektedir. Bu, ürün talebinin yıl başında artan bir eğilim gösterdiğini ortaya koyar.  
-**EN:** Shows the total sales trend for January–March. Low sales in January followed by an increase in February and March indicate a growing demand at the beginning of the year.
+**TR:** Ocak–Mart dönemindeki toplam satış trendleri gösterilmektedir. Ocak ayında düşük başlangıç, Şubat ve Mart’ta artış gözlemlenmektedir.  
+**EN:** Shows total sales trend for January–March. Low sales in January followed by an increase in February and March.  
 
 **Analitik Not / Analytical Note:** Bu grafik, modelin başlangıç haftalarını anlaması ve gelecekteki satış tahminlerini yaparken başlangıç koşullarını dikkate alması açısından önemlidir.  
 
@@ -68,7 +68,7 @@
 </p>
 
 **TR:** Ürün bazlı gelir dağılımı incelenmiştir. Ürün B, birim fiyat avantajı ve düzenli satış miktarı ile toplam geliri en yüksek olan ürün olarak öne çıkmaktadır.  
-**EN:** Examines revenue distribution by product. Product B stands out as the top contributor due to a combination of unit price advantage and steady sales volume.
+**EN:** Revenue distribution by product. Product B stands out as top contributor due to unit price advantage and steady sales volume.  
 
 **Analitik Not / Analytical Note:** Ürün bazlı gelir analizleri, hangi ürünlerin gelir ve stok yönetimi açısından stratejik önem taşıdığını belirlemek için kullanılabilir.  
 
@@ -79,8 +79,8 @@
   <img src="images/grafik3.png" alt="Units Sold" width="600">
 </p>
 
-**TR:** Ürün A, toplam satılan birim açısından lider konumdadır. Ürün C ve B daha düşük birim satışına sahiptir. Bu, ürünlerin popülaritesi ve talep miktarı hakkında fikir verir.  
-**EN:** Product A leads in total units sold, while Products C and B have lower unit sales. This provides insight into product popularity and demand volume.
+**TR:** Ürün A, toplam satılan birim açısından lider konumdadır. Ürün C ve B daha düşük birim satışına sahiptir.  
+**EN:** Product A leads in total units sold, while Products C and B have lower unit sales.  
 
 **Analitik Not / Analytical Note:** Birim satış analizleri, pazarlama ve stok yönetimi stratejilerini optimize etmek için kritik göstergeler sunar.  
 
@@ -92,7 +92,7 @@
 </p>
 
 **TR:** Model, geçmiş haftalık satış verilerini kullanarak gelecek 4 haftayı tahmin etmiştir. Tahminler gerçek trendleri genel olarak yakalamakta, uç değerlerde sapmalar gözlemlenmektedir.  
-**EN:** The model forecasts the next 4 weeks using past weekly sales data. Predictions generally follow the real trend, with some deviations for outliers.
+**EN:** The model forecasts the next 4 weeks using past weekly sales data. Predictions generally follow the real trend, with some deviations for outliers.  
 
 **Analitik Not / Analytical Note:** Haftalık tahminler, satış planlaması ve lojistik kararlar için kullanılabilir. Simüle edilmiş veri kullanıldığından model performansı gerçek dünyada daha iyi olabilir.  
 
@@ -101,7 +101,7 @@
 ## 🧠 Modelleme ve Performans / Modeling & Performance
 
 **Kullanılan Özellikler / Features Used:**  
-- Week, Month, Lag1, Lag2, Lag3  
+- Rolling_Mean_4, Lag1, Lag2  
 
 **Model Değerlendirme / Evaluation Metrics (Örnek / Example Results):**  
 
