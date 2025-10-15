@@ -30,7 +30,6 @@ df["TotalSales"] = df["Unit_sold"] * df["Price"]
 df["Date"] = pd.to_datetime(df["Date"])
 df.set_index("Date", inplace=True)
 
-# --- YENİ EKLENEN BÖLÜM: Analizler ve Grafikler ---
 
 # --- Analizler ---
 # Aylık satışlar artık 12 ayın tamamını içerecek
@@ -67,7 +66,6 @@ plt.xticks(rotation=0)
 plt.tight_layout()
 plt.show()
 
-# --- BÖLÜM SONU ---
 
 
 # --- Tahmin Modeli Kısmı ---
