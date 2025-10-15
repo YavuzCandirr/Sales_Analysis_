@@ -64,7 +64,7 @@
 
 ### 2️⃣ Ürün Bazında Toplam Gelir / Total Revenue by Product
 <p align="center">
-  <img src="images/grfk.png" alt="Product Revenue" width="600">
+  <img src="images/grfk2.png" alt="Product Revenue" width="600">
 </p>
 
 **TR:** Gelir bazında Ürün C, yaklaşık 260,000 birim ile en büyük katkıyı sağlamaktadır. Onu 200,000 birim ile Ürün A takip ederken, Ürün B en az geliri getirmiştir.
@@ -76,7 +76,7 @@
 
 ### 3️⃣ Ürün Bazında Satılan Toplam Birim / Total Units Sold by Product
 <p align="center">
-  <img src="images/grfk.png" alt="Units Sold" width="600">
+  <img src="images/grfk3.png" alt="Units Sold" width="600">
 </p>
 
 **TR:** Birim satış adedinde Ürün A, yaklaşık 10,000 adetle açık ara liderdir. En çok geliri getiren Ürün C'nin, Ürün A'nın yaklaşık yarısı kadar satılması, C'nin yüksek fiyatlı ve yüksek kâr marjlı bir ürün olduğunu doğrulamaktadır.
