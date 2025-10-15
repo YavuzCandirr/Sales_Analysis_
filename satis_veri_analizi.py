@@ -6,41 +6,43 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-
 sns.set_style("whitegrid")
 plt.rcParams['figure.figsize'] = (12, 6)
 
-#Veri oluşturma kısmı
-Products = np.random.choice(["A", "B", "C"], size=180)
-data = {
-    "Date": pd.date_range("2025-01-01", periods=180).tolist(),
-    "Product": Products,
-    "Unit_sold": [
-        10 + i//10 + np.random.randint(-3,3) if p == "A" else
-        25 - i//12 + np.random.randint(-3,3) if p == "B" else
-        15 + int(3*np.sin(i/5)) + np.random.randint(-2,2)
-        for i, p in enumerate(Products)
-    ],
-    "Price": [
-        20 if p=="A" else 30 if p=="B" else 50 for p in Products
-    ]
-}
+# --- 1. Her Ürün İçin Ayrı ve Sürekli Veri Üretimi ---
+num_days = 365
+np.random.seed(42)
+dates = pd.date_range("2025-01-01", periods=num_days)
 
-df = pd.DataFrame(data)
+# Her bir ürün için kendi içinde tutarlı bir zaman serisi oluşturuyoruz.
+sales_A = [10 + i//10 + np.random.randint(-3, 3) for i in range(num_days)]
+sales_B = [25 - i//12 + np.random.randint(-3, 3) for i in range(num_days)]
+sales_C = [15 + int(10*np.sin(i/20)) + np.random.randint(-2, 2) for i in range(num_days)]
+
+# Bu ayrı serileri tek bir DataFrame'de birleştiriyoruz.
+df_A = pd.DataFrame({'Date': dates, 'Product': 'A', 'Unit_sold': sales_A, 'Price': 20})
+df_B = pd.DataFrame({'Date': dates, 'Product': 'B', 'Unit_sold': sales_B, 'Price': 30})
+df_C = pd.DataFrame({'Date': dates, 'Product': 'C', 'Unit_sold': sales_C, 'Price': 50})
+
+df = pd.concat([df_A, df_B, df_C]).sort_values(by='Date').reset_index(drop=True)
+
 df["TotalSales"] = df["Unit_sold"] * df["Price"]
 df["Date"] = pd.to_datetime(df["Date"])
 df.set_index("Date", inplace=True)
 
+# --- YENİ EKLENEN BÖLÜM: Analizler ve Grafikler ---
+
 # --- Analizler ---
+# Aylık satışlar artık 12 ayın tamamını içerecek
 monthly_sales = df["TotalSales"].resample("M").sum()
 monthly_sales.index = monthly_sales.index.strftime('%B')
 total_units = df.groupby("Product")["Unit_sold"].sum().sort_values(ascending=False)
 product_sales = df.groupby("Product")["TotalSales"].sum().sort_values(ascending=False)
 
 # --- Grafikler ---
-# 1. Aylık Toplam Satış Grafiği (İlk 3 Ay)
-monthly_sales.head(3).plot(kind='bar', color='skyblue', edgecolor='black')
-plt.title('İlk 3 Ayın Toplam Satışları', fontsize=16)
+# 1. Aylık Toplam Satış Grafiği (Tüm Yıl)
+monthly_sales.plot(kind='bar', color='skyblue', edgecolor='black')
+plt.title('Aylık Toplam Satışlar (1 Yıl)', fontsize=16)
 plt.xlabel('Aylar', fontsize=12)
 plt.ylabel('Toplam Gelir', fontsize=12)
 plt.xticks(rotation=45)
@@ -65,71 +67,55 @@ plt.xticks(rotation=0)
 plt.tight_layout()
 plt.show()
 
-# --- XGBoost ile Tahmin Modeli Kısmı ---
+# --- BÖLÜM SONU ---
+
+
+# --- Tahmin Modeli Kısmı ---
 weekly_sales = df['TotalSales'].resample('W-MON').sum().reset_index()
-weekly_sales["Week"] = weekly_sales["Date"].dt.isocalendar().week
-weekly_sales["Month"] = weekly_sales["Date"].dt.month
+
+# Özellik seti
+weekly_sales['Rolling_Mean_4'] = weekly_sales['TotalSales'].shift(1).rolling(window=4).mean()
 weekly_sales["Lag1"] = weekly_sales["TotalSales"].shift(1)
 weekly_sales["Lag2"] = weekly_sales["TotalSales"].shift(2)
-weekly_sales["Lag3"] = weekly_sales["TotalSales"].shift(3)
 weekly_sales.dropna(inplace=True)
 
-features = ["Week", "Month", "Lag1", "Lag2", "Lag3"]
+features = ["Rolling_Mean_4", "Lag1", "Lag2"]
 target = "TotalSales"
+
 X = weekly_sales[features]
 y = weekly_sales[target]
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, shuffle=False)
-model = XGBRegressor(objective="reg:squarederror", n_estimators=200, learning_rate=0.1, max_depth=4)
+
+# Model
+model = XGBRegressor(objective="reg:squarederror", 
+                     n_estimators=100,
+                     learning_rate=0.1,
+                     max_depth=3)
+                     
 model.fit(X_train, y_train)
 
-# Tahmin döngüsü...
-forecasts = []
-n_forecast = 4
-last_row = weekly_sales.iloc[-1]
-last_date = last_row['Date']
-last_lags = [last_row['TotalSales'], last_row['Lag1'], last_row['Lag2']]
-for i in range(n_forecast):
-    future_date = last_date + pd.Timedelta(days=(i + 1) * 7)
-    future_week = future_date.isocalendar().week
-    future_month = future_date.month
-    current_features = pd.DataFrame([{"Week": future_week, "Month": future_month, "Lag1": last_lags[0], "Lag2": last_lags[1], "Lag3": last_lags[2]}], columns=features)
-    pred = model.predict(current_features)[0]
-    forecasts.append(pred)
-    last_lags = [pred] + last_lags[:-1]
-
-# Tahmin Grafiği
-plt.figure(figsize=(12, 6))
-plt.plot(weekly_sales["Date"], weekly_sales["TotalSales"], label="Gerçek Satışlar", marker="o", color='royalblue')
-future_dates = pd.date_range(weekly_sales["Date"].iloc[-1] + pd.Timedelta(days=7), periods=n_forecast, freq="7D")
-plt.plot(future_dates, forecasts, label="XGBoost Tahmini", linestyle="--", marker="x", color="orange", markersize=8)
-plt.legend()
-plt.title("XGBoost Haftalık Satış Tahmini", fontsize=16)
-plt.xlabel("Tarih", fontsize=12)
-plt.ylabel("Toplam Satış", fontsize=12)
-plt.grid(True)
-plt.show()
-
-
-
-# Modelin test verisi üzerindeki tahminlerini yapalım
+# --- Değerlendirme ---
 y_pred = model.predict(X_test)
-
-# Metrikleri hesaplayalım
-mae = mean_absolute_error(y_test, y_pred)
-mse = mean_squared_error(y_test, y_pred)
-rmse = np.sqrt(mse)
 r2 = r2_score(y_test, y_pred)
+mae = mean_absolute_error(y_test, y_pred)
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+
 
 print("\n" + "="*50)
-print("XGBoost Model Performans Değerlendirmesi")
+print("Model Performansı")
 print("="*50)
 print(f"Ortalama Mutlak Hata (MAE): {mae:.2f}")
-print(f"-> Tahminlerimiz gerçek satışlardan ortalama {mae:.2f} birim sapıyor.")
-print("-" * 50)
 print(f"Kök Ortalama Kare Hata (RMSE): {rmse:.2f}")
-print("-> Bu, büyük hatalara daha duyarlı bir sapma ölçüsüdür.")
-print("-" * 50)
 print(f"R-Kare (R²) Skoru: {r2:.2f}")
-print(f"-> Modelimiz, satışlardaki değişkenliğin yaklaşık %{r2*100:.0f}'ini açıklayabiliyor.")
-print("="*50 + "\n")
+if r2 > 0.5:
+    print(f"-> Satışlardaki değişkenliğin yaklaşık %{r2*100:.0f}'ini açıklayabiliyor.")
+
+
+# --- Tahmin Grafiği ---
+plt.figure(figsize=(15, 7))
+plt.plot(y_test.index, y_test, label="Gerçek Satışlar", marker=".", color='royalblue')
+plt.plot(y_test.index, y_pred, label="XGBoost Tahmini", linestyle="--", marker=".", color="orange")
+plt.legend()
+plt.title("Haftalık Satış Tahmini (Test Verisi)", fontsize=16)
+plt.show()
