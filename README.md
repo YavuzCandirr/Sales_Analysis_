@@ -52,7 +52,7 @@
 
 ### 1️⃣ Yıllık Toplam Satışlar / Total Annual Sales
 <p align="center">
-  <img src="Analiz_Resimler/Figure_1.png" alt="Monthly Sales" width="600">
+  <img src="İmages/Figure_1.png" alt="Monthly Sales" width="600">
 </p>
 
 **TR:** 12 aylık dönemdeki toplam satış gelirleri, belirgin bir mevsimsellik göstermektedir. Satışlar Ocak, Haziran ve Ekim aylarında zirve yaparken, özellikle bahar ve yaz sonu aylarında düşüşler yaşanmaktadır.
